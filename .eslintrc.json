@@ -5,6 +5,13 @@
         "es6": true,
         "node": true
     },
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -19,6 +26,9 @@
         "no-unused-vars": "warn",
         "constructor-super": "warn",
         "valid-typeof": "warn",
-        "no-extra-semi": "error"
+        "no-extra-semi": "error",
+        "indent": ["error", 2],
+        "jsx-a11y/img-has-alt": [0],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
 }
