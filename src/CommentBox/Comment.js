@@ -79,9 +79,14 @@ class Comment extends Component {
               <input
                 type="text"
                 placeholder="Update your comment..."
+                style={style.commentFormText}
+                value={this.state.text}
+                onChange={this.handleTextChange}
+              />
+              <input
+                type="submit"
                 style={style.commentFormPost}
                 value="Update"
-                onChange={this.handleTextChange}
               />
             </form>
           ) : null
@@ -106,8 +111,8 @@ Comment.defaultProps = {
   children: null,
   author: null,
   uniqueID: null,
-  onCommentDelete: () => {},
-  onCommentUpdate: () => {},
+  onCommentDelete: () => { },
+  onCommentUpdate: () => { },
 };
 
 export default Comment;
