@@ -11,10 +11,18 @@ class CommentBox extends Component {
     this.state = { data: [] };
     this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    this.handleCommentDelete = this.handleCommentDelete.bind(this);
+    this.handleCommentUpdate = this.handleCommentUpdate.bind(this);
   }
   componentDidMount() {
     this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+  }
+  loadCommentsFromServer() {
+    axios.get(this.props.url)
+      .then((res) => {
+        this.setState({ data: res.data });
+      });
   }
   handleCommentSubmit(comment) {
     const comments = this.state.data;
@@ -29,17 +37,34 @@ class CommentBox extends Component {
         this.setState({ data: comments });
       });
   }
-  loadCommentsFromServer() {
-    axios.get(this.props.url)
-      .then((res) => {
-        this.setState({ data: res.data });
+  handleCommentDelete(id) {
+    axios.delete(`${this.props.url}/${id}`)
+      .then(() => {
+        // eslint-disable-next-line no-console
+        console.log('Comment deleted');
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
+  }
+  handleCommentUpdate(id, comment) {
+    // Sends the comment id and new author/text to our api
+    axios.put(`${this.props.url}/${id}`, comment)
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
       });
   }
   render() {
     return (
       <div style={style.commentBox}>
         <h2>Comments:</h2>
-        <CommentList data={this.state.data} />
+        <CommentList
+          onCommentDelete={this.handleCommentDelete}
+          onCommentUpdate={this.handleCommentUpdate}
+          data={this.state.data}
+        />
         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>
     );

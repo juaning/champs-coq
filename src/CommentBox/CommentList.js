@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 import Comment from './Comment';
 import style from '../style';
 
-const CommentList = ({ data }) => {
+const CommentList = ({ data, onCommentDelete, onCommentUpdate }) => {
   const commentNodes = data.map((comment) => {
     const { _id, author, text } = comment;
     return (
-      <Comment author={author} key={_id}>
+      <Comment
+        author={author}
+        uniqueID={_id}
+        onCommentDelete={onCommentDelete}
+        onCommentUpdate={onCommentUpdate}
+        key={_id}
+      >
         {text}
       </Comment>
     );
@@ -25,10 +31,14 @@ CommentList.propTypes = {
     author: PropTypes.string,
     text: PropTypes.string,
   }),
+  onCommentDelete: PropTypes.func,
+  onCommentUpdate: PropTypes.func,
 };
 
 CommentList.defaultProps = {
   data: {},
+  onCommentDelete: () => {},
+  onCommentUpdate: () => {},
 };
 
 export default CommentList;
