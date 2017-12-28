@@ -24,7 +24,7 @@ it('calls vatapi.com correctly', () => {
     expect(result).toBe(20 * 2 * 1.19);
     expect(fakeFetch).toBeCalledWith(
       'https://vatapi.com/v1/country-code-check?code=DE',
-      { headers: { apikey: 'key123' }}
+      { headers: { apikey: 'key123' } },
     );
   });
 });
